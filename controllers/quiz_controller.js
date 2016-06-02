@@ -42,14 +42,31 @@ exports.ownershipRequired = function(req, res, next){
 
 // GET /quizzes
 exports.index = function(req, res, next) {
-	models.Quiz.findAll({ include: [ models.Attachment ] })
-		.then(function(quizzes) {
-			res.render('quizzes/index.ejs', { quizzes: quizzes});
-		})
-		.catch(function(error) {
-			next(error);
-		});
+  var busqueda = req.query.search;
+ if(!busqueda) { // Decidir si buscar texto o simplemente servir listado completo de preguntas
+ models.Quiz.findAll()
+ .then(function(quizzes) {
+ res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: false});
+ })
+ .catch(function(error) {
+ next(error);
+ });
+ } else {
+ busqueda = '%' + busqueda + '%'; // Delimitamos con % por delante y por detrás
+ busqueda = busqueda.replace(/\s/g, '%'); // Cambiamos espacios en blanco por %
+ console.log('Se buscará el texto:' + busqueda);
+ models.Quiz.findAll({where: ["question like ?", busqueda]})
+ .then(function(quizzes) {
+ res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: true});
+ })
+ .catch(function(error) {
+ next(error);
+ });
+ }
 };
+
+
+
 
 
 // GET /quizzes/:quizId
