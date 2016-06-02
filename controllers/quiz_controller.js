@@ -60,7 +60,7 @@ res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: false});
 next(error);
 });
 } else {
-searchText = '%' + searchText + '%'; /
+searchText = '%' + searchText + '%'; 
 searchText = searchText.replace(/\s/g, '%'); 
 models.Quiz.findAll({where: ["question like ?", searchText], include: [models.Attachment, {model: models.User, as: 'Author', attributes: ['username']}] })
 .then(function(quizzes) {
