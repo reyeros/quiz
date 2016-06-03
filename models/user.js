@@ -1,7 +1,7 @@
 
 var crypto = require('crypto');
 
-// Definicion de la clase User:
+// Definimos la clase User:
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('User',

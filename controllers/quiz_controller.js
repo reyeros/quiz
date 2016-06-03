@@ -42,16 +42,16 @@ res.send(403);
 };
 // GET /quizzes
 exports.index = function(req, res, next) {
-var searchText = req.query.search;
-if(!searchText) { 
+var busqueda = req.query.search;
+if(!busqueda) { 
 models.Quiz.findAll({ include: [models.Attachment, {model: models.User, as: 'Author', attributes: ['username']}] })
 .then(function(quizzes) {
 if(req.format === 'json') { 
-var string = ''; 
+var mensa = ''; 
 for (var i in quizzes) {
-string = string + JSON.stringify(quizzes[i]);
+mensa = mensa + JSON.stringify(quizzes[i]);
 }
-res.send(string);
+res.send(mensa);
 } else {
 res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: false}); 
 }
@@ -60,16 +60,16 @@ res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: false});
 next(error);
 });
 } else {
-searchText = '%' + searchText + '%'; 
-searchText = searchText.replace(/\s/g, '%'); 
-models.Quiz.findAll({where: ["question like ?", searchText], include: [models.Attachment, {model: models.User, as: 'Author', attributes: ['username']}] })
+busqueda = '%' + busqueda + '%'; 
+busqueda = busqueda.replace(/\s/g, '%'); 
+models.Quiz.findAll({where: ["question like ?", busqueda], include: [models.Attachment, {model: models.User, as: 'Author', attributes: ['username']}] })
 .then(function(quizzes) {
 if(req.format === 'json') { 
-var string = ''; 
+var mensa = ''; 
 for (var i in quizzes) {
-string = string + JSON.stringify(quizzes[i]);
+mensa = mensa + JSON.stringify(quizzes[i]);
 }
-res.send(string);
+res.send(mensa);
 } else {
 res.render('quizzes/index.ejs', { quizzes: quizzes, resultado: true}); 
 }

@@ -10,6 +10,10 @@ module.exports = {
            createdAt: new Date(), updatedAt: new Date() },
          { question: 'Capital de España', answer: 'Madrid',
            createdAt: new Date(), updatedAt: new Date() },
+          { question: 'Capital de USA', answer: 'Washington',
+           createdAt: new Date(), updatedAt: new Date() },
+          { question: 'Capital de Inglaterra', answer: 'Londres',
+           createdAt: new Date(), updatedAt: new Date() },
         ]);
   },
 

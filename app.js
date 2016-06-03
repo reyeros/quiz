@@ -42,17 +42,17 @@ app.use(function(req, res, next) {
 res.locals.session = req.session;
 next();
 });
-// Actualizar contador timeout
+// Actualizamos el contador de Timeout
 app.use(function(req, res, next) {
-if(!req.session.user) { // Si no hay usuario logeado
+if(!req.session.user) { // Si no hay ningun usuario loggeado
 next();
-} else if(req.session.user && (req.session.user.expires < Date.now())) { // Si hay un usuario logeado cuyo tiempo ha expirado
+} else if(req.session.user && (req.session.user.expires < Date.now())) { // Si tenemos un usuario loggeado con tiempo expirado
 delete req.session.user;
 next();
-} else if (req.session.user && (req.session.user.expires > Date.now())) { // Si hay un usuario logeado y su tiempo no ha expirado aún
+} else if (req.session.user && (req.session.user.expires > Date.now())) { //Si tenemos un usuario loggeado con tiempo no expirado
 req.session.user.expires = (Date.now() + 120000);
 next();
-} else { // Otro caso
+} else { 
 next();
 }
 });
